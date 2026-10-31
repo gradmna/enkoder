@@ -36,7 +36,7 @@ end
 
 local function srz(v)
 	if type(v) == "number" or type(v) == "boolean" then return tostring(v) end
-	if type(v) == "table" then return _M.encd(v,{}) end
+	if type(v) == "table" then return _M.encd(v,{noErr=noErr}) end
 	if type(v) == "string" then
 		local out = "\""
 		local count = 1
