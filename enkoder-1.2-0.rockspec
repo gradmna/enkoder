@@ -1,5 +1,5 @@
 package = "enkoder"
-version = "1.1-0"
+version = "1.2-0"
 source = {
 	url = "git+https://github.com/RixInGithub/enkoder.git"
 }

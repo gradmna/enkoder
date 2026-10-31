@@ -1,4 +1,5 @@
 local _M = {}
+local noErr = false
 
 local function eatJsonStr(a)
 	if a:sub(1,1) ~= "\"" then return error(string.format("expected double quotes, got \"%s\"", a:sub(1,1))) end
@@ -64,11 +65,14 @@ local function srz(v)
 		end
 		return out.."\""
 	end
-	if (v == nil) or require("enkoder").isNull(v) then return "null" end -- handling nil bcuz just in case™
+	if v == nil or require("enkoder").isNull(v) then return "null" end -- handling nil bcuz just in case™
+	if noErr==true then return srz("unserializeable "..type(v)) end
 	error(string.format("expected type table, string, number, nil or enkoder.null, got %s",type(v)))
 end
 
 function _M.encd(tbl, _)
+	noErr = _.noErr
+	if noErr then noErr = true end
 	if type(tbl)~="table" then return srz(tbl) end
 	local mt = getmetatable(tbl)
 	if mt == nil then mt = {} end
@@ -92,7 +96,7 @@ function _M.encd(tbl, _)
 		for k,v in pairs(tbl) do
 			if looped then out = out.."," end
 			looped = true
-			if v~=nil then out = out..srz(tostring(k))..":"..srz(v) end -- tbl[k] = v means making k vanish so were doing that too
+			out = out..srz(tostring(k))..":"..srz(v)
 		end
 		return "{"..out.."}"
 	end

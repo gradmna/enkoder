@@ -29,7 +29,7 @@ note that in the examples below, any values that are `nil` in a key/value table 
 
 here are the following formats and their options:
 #### `json`
-the classic, the javascript object notation format. no options here.
+the classic, the javascript object notation format. the only option here is `noErr` which serializes unserializeable objects to a string containing the type.
 
 example:
 
